@@ -1,0 +1,160 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+
+# Django static files
+staticfiles/
+static/
+
+# Secret key and environment variables
+.env
+.env.*
+!example.env
+
+# OpenAI and Stripe API keys or config files
+openai_api_key.json
+stripe_config.json
+secrets.json
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-error.log*
+yarn-debug.log*
+.pnp/
+.pnp.js
+
+# Logs
+logs/
+*.log
+
+# Virtual environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.virtualenv/
+
+# Editor directories and files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# MacOS files
+.DS_Store
+
+# Thumbnails
+Thumbs.db
+
+# Other
+*.swp
+*~
+.project
+.classpath
+.pydevproject
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# PyCharm
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Python egg metadata
+*.egg-info/
+.eggs/
+
+# Testing results
+.test/
+
+# Coverage reports
+htmlcov/
+.tox/
+.nox/
+
+# Type checker
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+
+# PEP 582; used by e.g. pdm
+__pypackages__/
+
+# Celery beat schedule files
+celerybeat-schedule
+celerybeat.pid
+
+# SQLite database files
+*.sqlite3
+
+# Backup files
+*.bak
+
+# Compiled code
+*.exe
+*.dll
+*.com
+*.class
+*.jar
+*.bat
+*.o
+*.out
+
+# Profiling data
+.prof
+
+# Encrypted files
+*.enc
