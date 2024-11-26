@@ -27,7 +27,7 @@ urlpatterns = [
     path('dashboard/', chatbot_views.dashboard, name='dashboard'),
     path('login/', chatbot_views.login_view, name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='index'), name='logout'),
-    path('signup/', chatbot_views.signup, name='signup'),
+    path('logout/', chatbot_views.CustomLogoutView.as_view(next_page='index'), name='logout'),
     path('checkout/', chatbot_views.checkout, name='checkout'),
     path('success/', chatbot_views.success, name='success'),
     path('cancel/', chatbot_views.cancel, name='cancel'),

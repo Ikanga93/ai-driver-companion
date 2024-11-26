@@ -138,6 +138,10 @@ def success(request):
 def cancel(request):
     return render(request, 'chatbot/cancel.html')
 
+class CustomLogoutView(LogoutView):
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+    
 @csrf_exempt
 def stripe_webhook(request):
     payload = request.body
