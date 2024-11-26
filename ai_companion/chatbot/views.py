@@ -12,6 +12,9 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+from .forms import CustomUserCreationForm
+from .forms import EmailAuthenticationForm
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -21,6 +24,22 @@ def dashboard(request):
 
 def index(request):
     return render(request, 'chatbot/index.html')
+
+def login_view(request):
+    if request.method == 'POST':
+        form = EmailAuthenticationForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, email=email, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('dashboard')
+            else:
+                form.add_error(None, 'Invalid email or password.')
+    else:
+        form = EmailAuthenticationForm()
+    return render(request, 'chatbot/login.html', {'form': form})
 
 def chat(request):
     if request.method == 'POST':
@@ -82,7 +101,7 @@ def send_to_openai(audio_bytes):
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             username = form.cleaned_data.get('username')
@@ -91,7 +110,7 @@ def signup(request):
             login(request, user)
             return redirect('dashboard')
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, 'chatbot/signup.html', {'form': form})
 
 @login_required
@@ -118,3 +137,42 @@ def success(request):
 
 def cancel(request):
     return render(request, 'chatbot/cancel.html')
+
+@csrf_exempt
+def stripe_webhook(request):
+    payload = request.body
+    sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')
+    endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError as e:
+        # Invalid payload
+        return JsonResponse({'error': 'Invalid payload'}, status=400)
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        return JsonResponse({'error': 'Invalid signature'}, status=400)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+
+    # Handle the event
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+        handle_successful_payment(session)
+
+    # ... handle other event types as needed ...
+
+    return JsonResponse({'status': 'success'})
+
+def handle_successful_payment(session):
+    customer_email = session['customer_details']['email']
+    # Retrieve the user by email and update subscription status
+    try:
+        user = User.objects.get(email=customer_email)
+        user.profile.is_subscribed = True
+        user.profile.save()
+    except User.DoesNotExist:
+        # Handle the case where the user doesn't exist
+        pass  # Or log the error or create the user

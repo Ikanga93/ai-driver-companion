@@ -151,3 +151,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# ai_companion/settings.py
+
+AUTHENTICATION_BACKENDS = ['chatbot.backends.EmailBackend', 'django.contrib.auth.backends.ModelBackend']
