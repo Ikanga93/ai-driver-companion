@@ -21,14 +21,17 @@ env = environ.Env(
     DEBUG=(bool, False)
 )
 # reading .env file
-environ.Env.read_env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-fm0$)h^i%@z@_6=vddb0gulr+ls1^0u7m#ze3qv_)stoq#pj45'
+SECRET_KEY = env('SECRET_KEY')
 
+DEBUG = env('DEBUG')
+
+ALLOWED_HOSTS = []
 # OpenAI API Key
 OPENAI_API_KEY = env('OPENAI_API_KEY')
 
@@ -38,7 +41,7 @@ STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
 STRIPE_WEBHOOK_SECRET = env('STRIPE_WEBHOOK_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
 ALLOWED_HOSTS = []
 
