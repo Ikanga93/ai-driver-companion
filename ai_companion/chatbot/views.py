@@ -11,6 +11,9 @@ from django.conf import settings
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
+from django.views.decorators.csrf import csrf_exempt
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 @login_required
 def dashboard(request):
@@ -90,3 +93,28 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'chatbot/signup.html', {'form': form})
+
+@login_required
+def checkout(request):
+    if request.method == 'POST':
+        session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=[{
+                'price': 'price_1Hh1XYZ...',  # Replace with your Stripe Price ID
+                'quantity': 1,
+            }],
+            mode='subscription',
+            success_url=request.build_absolute_uri('/success/'),
+            cancel_url=request.build_absolute_uri('/cancel/'),
+        )
+        return JsonResponse({'id': session.id})
+    context = {
+        'stripe_public_key': settings.STRIPE_PUBLIC_KEY
+    }
+    return render(request, 'chatbot/checkout.html', context)
+
+def success(request):
+    return render(request, 'chatbot/success.html')
+
+def cancel(request):
+    return render(request, 'chatbot/cancel.html')

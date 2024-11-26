@@ -28,6 +28,9 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='chatbot/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='index'), name='logout'),
     path('signup/', chatbot_views.signup, name='signup'),
-    path('api/chat/', chatbot_views.chat, name='chat'),
+    path('checkout/', chatbot_views.checkout, name='checkout'),
+    path('success/', chatbot_views.success, name='success'),
+    path('cancel/', chatbot_views.cancel, name='cancel'),
+    path('ws/chat/', chatbot_views.ChatConsumer.as_asgi()),
+    path('webhook/', chatbot_views.stripe_webhook, name='stripe-webhook'),
 ]
-
