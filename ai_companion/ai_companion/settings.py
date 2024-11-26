@@ -90,7 +90,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ai_companion.wsgi.application'
 ASGI_APPLICATION = 'ai_companion.asgi.application'
-
+# Channels Configuration
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -102,12 +107,6 @@ DATABASES = {
     }
 }
 
-# Channels Configuration
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer",
-    },
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
