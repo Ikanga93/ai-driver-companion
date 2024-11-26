@@ -15,6 +15,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from .forms import CustomUserCreationForm
 from .forms import EmailAuthenticationForm
+from django.contrib.auth.views import LogoutView
+
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -140,6 +142,7 @@ def cancel(request):
 
 class CustomLogoutView(LogoutView):
     def get(self, request, *args, **kwargs):
+        next_page = 'index'
         return self.post(request, *args, **kwargs)
     
 @csrf_exempt
