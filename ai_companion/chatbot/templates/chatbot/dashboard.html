@@ -1,17 +1,29 @@
 <!-- chatbot/templates/chatbot/dashboard.html -->
+
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    {% load static %}
     <title>Dashboard - AI Virtual Companion</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="{% static 'js/chat.js' %}"></script>
 </head>
 <body>
-    <h1>Your AI Companion</h1>
-    <button id="start-chat">Start Conversation</button>
-    <button id="stop-chat">Stop Conversation</button>
-    <audio id="responseAudio" controls></audio>
+    <!-- Navigation Bar -->
+    <div class="nav-bar">
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
 
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Your AI Companion</h1>
+        <div class="audio-controls">
+            <button id="start-chat">Start Conversation</button>
+            <button id="stop-chat">Stop Conversation</button>
+            <audio id="responseAudio" controls></audio>
+        </div>
+    </div>
     <script src="{% static 'js/chat.js' %}"></script>
 </body>
 </html>
