@@ -27,3 +27,10 @@ application = ProtocolTypeRouter({
         )
     ),
 })
+
+'''
+Explanation:
+
+asgi.py is configured to route WebSocket connections using the URL patterns defined in chatbot.routing.
+AuthMiddlewareStack ensures that the user authentication is available in your WebSocket consumers.
+'''

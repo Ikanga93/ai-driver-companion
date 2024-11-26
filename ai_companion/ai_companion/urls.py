@@ -31,6 +31,5 @@ urlpatterns = [
     path('checkout/', chatbot_views.checkout, name='checkout'),
     path('success/', chatbot_views.success, name='success'),
     path('cancel/', chatbot_views.cancel, name='cancel'),
-    path('ws/chat/', chatbot_views.ChatConsumer.as_asgi()),
     path('webhook/', chatbot_views.stripe_webhook, name='stripe-webhook'),
 ]
