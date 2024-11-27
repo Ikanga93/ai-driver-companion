@@ -14,6 +14,7 @@ import django
 from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
 from channels.auth import AuthMiddlewareStack
+from django.conf import settings
 import chatbot.routing
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ai_companion.settings')
@@ -27,6 +28,10 @@ application = ProtocolTypeRouter({
         )
     ),
 })
+
+if settings.DEBUG:
+    from django.contrib.staticfiles.handlers import ASGIStaticFilesHandler
+    application = ASGIStaticFilesHandler(application)
 
 '''
 Explanation:
